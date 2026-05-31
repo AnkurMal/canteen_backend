@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta, timezone
+import os
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -10,7 +11,7 @@ from sqlmodel import select
 from database import SessionDep, password_hash
 from user import User, UserPublic
 
-SECRET_KEY = "df616c8b28efb6009147473b11111ffc665334e81d3d36c5b6a0dc0bc0d35ea2"
+SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
