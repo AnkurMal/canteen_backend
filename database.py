@@ -1,5 +1,6 @@
 from typing import Annotated
 from fastapi import Depends
+from pwdlib import PasswordHash
 from sqlalchemy import create_engine
 from sqlmodel import Session
 
@@ -15,3 +16,4 @@ def get_session():
 
 
 SessionDep = Annotated[Session, Depends(get_session)]
+password_hash = PasswordHash.recommended()

@@ -1,8 +1,7 @@
 from fastapi import APIRouter
-from pwdlib import PasswordHash
-from sqlmodel import Field, SQLModel, select
+from sqlmodel import Field, SQLModel
 
-from database import SessionDep
+from database import SessionDep, password_hash
 
 
 class UserBase(SQLModel):
@@ -23,12 +22,6 @@ class UserPublic(UserBase):
 
 
 router = APIRouter(prefix="/users", tags=["users"])
-password_hash = PasswordHash.recommended()
-
-
-@router.get("/", response_model=list[UserPublic])
-async def get_users(session: SessionDep):
-    return session.exec(select(User)).all()
 
 
 @router.post("/", response_model=UserPublic)
