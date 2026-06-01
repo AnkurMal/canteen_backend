@@ -26,10 +26,10 @@ router = APIRouter(prefix="/users", tags=["users"])
 
 @router.post("/", response_model=UserPublic)
 async def register_user(user: UserCreate, session: SessionDep):
-    user_exits = session.exec(
+    user_exists = session.exec(
         select(User).where(User.username == user.username)
     ).first()
-    if user_exits is not None:
+    if user_exists is not None:
         raise HTTPException(status.HTTP_409_CONFLICT, "Username is already taken")
 
     hashed = password_hash.hash(user.password)
